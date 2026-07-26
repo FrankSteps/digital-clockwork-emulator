@@ -27,6 +27,10 @@ This repository serves as a personal experimental environment for:
 
 1. As a final assignment for the Digital Systems course, offered by the Computer Department at Universidade Federal de Sergipe (UFS) and taught by Prof. Dr. Calebe Micael de Oliveira Conceição and Prof. Rodolfo Botto de Barros Garcia, we were challenged to extend the Digital Clockwork with a fully functional alarm system.
 
+2. As a first step toward turning this project into a personal hardware lab, I, Francisco (@FrankSteps), am transcribing the entire logic of the project into Verilog. My friend @LuccaPedreira
+
+3. As a complement to, and a deeper practical application of, my Rocq studies alongside @GuilhermeAmancio, I will formally prove, module by module, that the project is correct and that the full logic of a clock is respected — without relying on empirical experience alone to demonstrate that the system works and will not fail.
+
 ## Operating System Compatibility
 
 The simulator runs on **Linux, Windows, and macOS**. Keyboard capture is implemented separately for each platform behind a common interface (`include/keyboard.hpp`):
@@ -160,6 +164,9 @@ digital-clockwork-simulator
 │   ├── 4063test.cpp
 │   ├── 4511test.cpp
 │   └── frequencytest.cpp
+├── verilog
+│   ├── rtl                        
+│   └── db
 ├── .gitignore                       # Git ignored files configuration
 ├── CONTRIBUTING                     # Guidelines for contributing to the project
 ├── LICENSE                          # Project license
