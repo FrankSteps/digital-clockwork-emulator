@@ -1,6 +1,5 @@
 builds/
-.vscode/
-verilog/
+.vscode/c_cpp_properties.json
 
 *.exe
 *.out
@@ -24,3 +23,7 @@ verilog/
 *.dvi
 *.xdv
 *.ps
+*.glob
+*.vo
+*.vok
+*.vos
