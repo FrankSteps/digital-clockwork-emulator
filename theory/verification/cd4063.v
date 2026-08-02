@@ -67,11 +67,11 @@ Record CD4063_Output : Type := mk_output {
 
 (* Decides the final output based on the local comparison result *)
 Definition resolve_cascade (cmp : comparison) (casc : CD4063_Cascade) : CD4063_Output :=
-match cmp with
-| Less    => mk_output true false false
-| Greater => mk_output false true false
-| Equal   => mk_output (in_ls casc) (in_gt casc) (in_eq casc)
-end.
+  match cmp with
+  | Less    => mk_output true false false
+  | Greater => mk_output false true false
+  | Equal   => mk_output (in_ls casc) (in_gt casc) (in_eq casc)
+  end.
 
 
 (* Full chip behavior *)

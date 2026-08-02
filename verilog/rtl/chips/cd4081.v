@@ -1,4 +1,4 @@
-module cd4071 (
+module cd4081 (
     input wire [3:0] a,
     input wire [3:0] b,
     output wire [3:0] c
