@@ -55,7 +55,7 @@
 
 \section{Introdução}
 
-O \textit{digital-clockwork-simulator} é um relógio digital implementado inteiramente a partir de componentes lógicos discretos, como portas lógicas, flip-flops, comparadores e contadores. Este trabalho tem como objetivo transcrever, com rigor matemático, a lógica de funcionamento desses circuitos para um modelo formal, utilizando conceitos de linguagens formais para descrever o comportamento de cada componente e suas interações. Essa formalização estabelece uma ponte entre a implementação simulada em C++ e sua futura descrição em Verilog, possibilitando posteriormente sua verificação formal em Rocq.
+O \textit{a digital clockwork} é um relógio digital implementado inteiramente a partir de componentes lógicos discretos, como portas lógicas, flip-flops, comparadores e contadores. Este trabalho tem como objetivo transcrever, com rigor matemático, a lógica de funcionamento desses circuitos para um modelo formal, utilizando conceitos de linguagens formais para descrever o comportamento de cada componente e suas interações. Essa formalização estabelece uma ponte entre a implementação simulada em C++ e sua futura descrição em Verilog, possibilitando posteriormente sua verificação formal em Rocq.
 
 A motivação deste trabalho é dupla. Primeiro, a construção de um modelo matemático explícito exige que decisões de projeto muitas vezes implícitas no hardware ou no código sejam definidas com precisão: o instante exato em que um comparador altera seu estado lógico, a convenção adotada para bordas de subida e descida de um sinal periódico, e a forma como os elementos sequenciais evoluem diante de um pulso de clock. O modelo formal representa então o circuito como um sistema bem definido, reduzindo as ambiguidades presentes na implementação.
 
@@ -67,7 +67,7 @@ O documento segue a cadeia lógica de funcionamento do relógio digital: parte d
 \newpage
 
 
-\subsection{Aquisição e digitalização do sinal da rede elétrica}
+\section{Aquisição e digitalização do sinal da rede elétrica}
 
 A alimentação elétrica proveniente da rede é originalmente representada por um sinal analógico alternado, cuja tensão varia continuamente no tempo. Considerando uma rede elétrica residencial de tensão eficaz aproximada de \(125\)V e frequência de \(60\)Hz, o comportamento instantâneo da tensão pode ser modelado por uma função senoidal periódica:
 
@@ -145,5 +145,9 @@ T=\frac{1}{60},
 porém agora assumindo somente os valores discretos \(0\) e \(1\). Durante metade do período, correspondente ao semiciclo positivo da senoide, o sinal permanece em nível lógico alto; durante a outra metade, correspondente ao semiciclo negativo, permanece em nível lógico baixo.
 
 Portanto, a função \(q(t)\) representa uma onda quadrada ideal de \(60\)Hz, obtida a partir da senoide da rede elétrica através de um processo de redução de amplitude e comparação por zero. Esse sinal digital pode então ser utilizado como referência de clock para sincronizar os elementos sequenciais do circuito.
+
+
+\section{Divisão de frequência com o 4040}
+\section{}
 
 \end{document}
