@@ -1,0 +1,4 @@
+# Force correct language detection for .v files
+
+verilog/**/*.v linguist-language=Verilog
+theory/verification/**/*.v linguist-language=Coq

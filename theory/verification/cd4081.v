@@ -25,6 +25,17 @@ Definition CD4081 (input : CD4081_Input) : CD4081_Output :=
 
 
 Example test_cd4081_1 :
-    CD4081 (mk_input false false false true true false true true) = mk_output false false false true.
+    CD4081 
+    ( 
+        mk_input 
+        false false 
+        false true 
+        true false 
+        true true 
+    ) 
+    = mk_output 
+        false 
+        false 
+        false 
+        true.
 Proof. reflexivity. Qed. 
-    

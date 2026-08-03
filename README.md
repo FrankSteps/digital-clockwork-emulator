@@ -109,7 +109,7 @@ And update the path in `src/keyboard_linux.cpp` accordingly.
 ```bash
 digital-clockwork-simulator
 ├── .vscode
-│   └── settings.json
+│   └── settings.json                 # files associations
 ├── assets                            # Images and graphical resources
 │   ├── a_digital_clockwork
 │   │   ├── clockwork-board.png

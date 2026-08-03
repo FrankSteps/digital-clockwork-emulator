@@ -24,6 +24,18 @@ Definition CD4071 (input : CD4071_Input) : CD4071_Output :=
         mk_output c0 c1 c2 c3.
     
 
-Example test_cd4071_1 :
-    CD4071 (mk_input false false false true true false true true) = mk_output false true true true.
-Proof. reflexivity. Qed.
+Example test_cd4081_1 :
+    CD4071 
+    ( 
+        mk_input 
+        false false 
+        false true 
+        true false 
+        true true 
+    ) 
+    = mk_output 
+        false 
+        true 
+        true 
+        true.
+Proof. reflexivity. Qed. 

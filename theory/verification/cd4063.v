@@ -36,15 +36,36 @@ Definition CD4063_core (input : CD4063_Input) : comparison :=
 
 (* Tests *)
 Example teste_CD4063_1 :
-  CD4063_core (mk_input true false true true false true true false) = Greater.
+  CD4063_core 
+  (
+    mk_input 
+    true false 
+    true true 
+    false true
+    true false
+  ) = Greater.
 Proof. reflexivity. Qed.
 
 Example teste_CD4063_2 :
-  CD4063_core (mk_input false false true true true true true false) = Less.
+  CD4063_core 
+  (
+    mk_input 
+    false false 
+    true true 
+    true true 
+    true false
+  ) = Less.
 Proof. reflexivity. Qed.
 
 Example teste_CD4063_3 :
-  CD4063_core (mk_input true false false true true false false true) = Equal.
+  CD4063_core 
+  (
+    mk_input 
+    true false 
+    false true 
+    true false 
+    false true
+  ) = Equal.
 Proof. reflexivity. Qed.
 
 
