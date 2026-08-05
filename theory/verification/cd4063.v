@@ -104,3 +104,8 @@ Definition CD4063 (input : CD4063_Input) (casc : CD4063_Cascade) : CD4063_Output
 Example teste_cascade_1 :
   CD4063 (mk_input true false true true true false true true) (mk_cascade true false false) = mk_output true false false.
 Proof. reflexivity. Qed.
+
+  
+Example teste_cascade_2 :
+  CD4063 (mk_input true false true true true false true true) (mk_cascade false true false) = mk_output false false true.
+Proof. reflexivity. Qed.
