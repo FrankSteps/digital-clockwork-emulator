@@ -27,6 +27,10 @@ This repository serves as a personal experimental environment for:
 
 1. As a final assignment for the Digital Systems course, offered by the Computer Department at Universidade Federal de Sergipe (UFS) and taught by Prof. Dr. Calebe Micael de Oliveira Conceição and Prof. Rodolfo Botto de Barros Garcia, we were challenged to extend the Digital Clockwork with a fully functional alarm system.
 
+2. As a first step toward turning this project into a personal hardware lab, my friend @LuccaPedreira is transcribing the entire logic of the project into Verilog.
+
+3. As a complement to, and a deeper practical application of, my Rocq studies alongside @GuilhermeAmancio, I will formally prove, module by module, that the project is correct and that the full logic of a clock is respected — without relying on empirical experience alone to demonstrate that the system works and will not fail.
+
 ## Operating System Compatibility
 
 The simulator runs on **Linux, Windows, and macOS**. Keyboard capture is implemented separately for each platform behind a common interface (`include/keyboard.hpp`):
@@ -104,6 +108,8 @@ And update the path in `src/keyboard_linux.cpp` accordingly.
 
 ```bash
 digital-clockwork-simulator
+├── .vscode
+│   └── settings.json                 # files associations
 ├── assets                            # Images and graphical resources
 │   ├── a_digital_clockwork
 │   │   ├── clockwork-board.png
@@ -160,8 +166,25 @@ digital-clockwork-simulator
 │   ├── 4063test.cpp
 │   ├── 4511test.cpp
 │   └── frequencytest.cpp
+├── theory                           # Formal specification and verification
+│   ├── formulation                  # Mathematical modeling, written in LaTeX
+│   │   ├── mathematical_formulation.pdf
+│   │   └── mathematical_formulation.tex
+│   └── verification                 # Formal proofs of chip behavior, written in Rocq
+│       └── cd4063.v
+├── verilog
+│   └── rtl                          # Register-transfer level hardware descriptions
+│       └── chips                    # One module per chip, mirrors theory/verification
+│           ├── cd4013.v                
+│           ├── cd4017.v               
+│           ├── cd4029.v               
+│           ├── cd4040.v              
+│           ├── cd4063.v               
+│           ├── cd4071.v               
+│           ├── cd4081.v              
+│           └── cd4511.v             
 ├── .gitignore                       # Git ignored files configuration
-├── CONTRIBUTING                     # Guidelines for contributing to the project
+├── CONTRIBUTING.md                  # Guidelines for contributing to the project
 ├── LICENSE                          # Project license
 ├── Makefile                         # Build automation file
 └── README.md                        # Project documentation

@@ -1,0 +1,153 @@
+\documentclass[a4paper,12pt]{article}
+
+% Pacotes essenciais
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{indentfirst}
+
+% para por código com corzinha ui ui
+\usepackage{minted}
+\usepackage{xcolor}
+
+\definecolor{bg}{rgb}{0.1,0.1,0.1}
+\usemintedstyle{monokai}
+
+\geometry{a4paper, margin=2.5cm}
+
+\DeclareMathOperator{\sen}{sen}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+
+    UNIVERSIDADE FEDERAL DE SERGIPE\\
+    CIDADE UNIVERSITÁRIA PROFESSOR JOSÉ ALOÍSIO DE CAMPOS
+
+\vspace{4cm}
+
+    FRANCISCO PASSOS DOS SANTOS ALVES
+
+\vspace{4cm}
+
+    FORMULAÇÃO MATEMÁTICA DE A DIGITAL CLOCKWORK
+\vfill
+
+    SÃO CRISTÓVÃO\\
+    2026
+
+\end{titlepage}
+
+\clearpage
+\pagenumbering{arabic}
+
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Introdução}
+
+O \textit{a digital clockwork} é um relógio digital implementado inteiramente a partir de componentes lógicos discretos, como portas lógicas, flip-flops, comparadores e contadores. Este trabalho tem como objetivo transcrever, com rigor matemático, a lógica de funcionamento desses circuitos para um modelo formal, utilizando conceitos de linguagens formais para descrever o comportamento de cada componente e suas interações. Essa formalização estabelece uma ponte entre a implementação simulada em C++ e sua futura descrição em Verilog, possibilitando posteriormente sua verificação formal em Rocq.
+
+A motivação deste trabalho é dupla. Primeiro, a construção de um modelo matemático explícito exige que decisões de projeto muitas vezes implícitas no hardware ou no código sejam definidas com precisão: o instante exato em que um comparador altera seu estado lógico, a convenção adotada para bordas de subida e descida de um sinal periódico, e a forma como os elementos sequenciais evoluem diante de um pulso de clock. O modelo formal representa então o circuito como um sistema bem definido, reduzindo as ambiguidades presentes na implementação.
+
+Segundo, essa especificação é a base necessária para demonstrar propriedades do sistema. Antes de provar que uma implementação está correta, é preciso definir com precisão qual é o comportamento esperado do circuito e essa definição é exatamente a especificação construída neste documento, que descreve as operações, estados e propriedades que caracterizam o funcionamento dos componentes.
+
+O documento segue a cadeia lógica de funcionamento do relógio digital: parte do sinal físico da rede elétrica de 60Hz, usado como referência temporal do sistema, e avança pelas etapas de aquisição, digitalização, divisão de frequência, contagem de pulsos e formação das unidades de tempo. Cada seção apresenta a modelagem matemática dos circuitos envolvidos e suas relações dentro do sistema, construindo gradualmente a especificação formal do relógio digital.
+
+
+\newpage
+
+
+\section{Aquisição e digitalização do sinal da rede elétrica}
+
+A alimentação elétrica proveniente da rede é originalmente representada por um sinal analógico alternado, cuja tensão varia continuamente no tempo. Considerando uma rede elétrica residencial de tensão eficaz aproximada de \(125\)V e frequência de \(60\)Hz, o comportamento instantâneo da tensão pode ser modelado por uma função senoidal periódica:
+
+\[
+f : \mathbb{R} \to \mathbb{R}, \qquad f(t)=125\sen(120\pi t).
+\]
+
+O termo \(120\pi\) está relacionado à frequência angular da rede, obtida pela relação
+
+\[
+\omega = 2\pi f,
+\]
+
+onde \(f=60\)Hz representa a frequência de oscilação do sinal. Portanto,
+
+\[
+\omega = 2\pi(60)=120\pi \ \text{rad/s}.
+\]
+
+Dessa forma, a tensão completa um ciclo a cada
+
+\[
+T=\frac{1}{60}\text{s},
+\]
+
+satisfazendo a propriedade de periodicidade
+
+\[
+f\left(t+\frac{1}{60}\right)=f(t), \qquad \forall t\in\mathbb{R}.
+\]
+
+Embora esse sinal seja adequado para representar matematicamente a rede elétrica, circuitos digitais não trabalham diretamente com níveis contínuos de tensão. Portanto, é necessário realizar uma etapa de condicionamento do sinal, reduzindo sua amplitude para um nível compatível com a eletrônica digital.
+
+Considerando uma redução ideal de tensão por um fator \(25\), a senoide de \(125\)V é convertida para uma senoide de amplitude \(5\)V, mantendo a mesma frequência e preservando a informação temporal do sinal original. Essa transformação pode ser descrita pela função:
+
+\[
+g:\mathbb{R}\to\mathbb{R}, \qquad
+g(t)=\frac{f(t)}{25}=5\sen(120\pi t).
+\]
+
+A divisão por \(25\) altera apenas a amplitude do sinal, não modificando sua frequência nem seu período. Dessa maneira,
+
+\[
+g\left(t+\frac{1}{60}\right)=g(t), \qquad \forall t\in\mathbb{R}.
+\]
+
+O sinal \(g(t)\), apesar de possuir amplitude adequada para circuitos digitais, ainda é uma grandeza analógica, pois assume infinitos valores possíveis dentro do intervalo \([-5,5]\)V. Para que esse sinal possa ser utilizado como referência de clock em um sistema digital, é necessário convertê-lo para uma representação binária, contendo apenas dois estados possíveis.
+
+Essa conversão é realizada por meio de um comparador de tensão ideal, cujo funcionamento consiste em verificar o sinal de entrada em relação a um valor de referência. Neste modelo, considera-se o limiar de decisão igual a \(0\)V. Assim, quando a senoide encontra-se no semiciclo positivo, o comparador produz nível lógico alto; quando encontra-se no semiciclo negativo ou exatamente no cruzamento por zero, produz nível lógico baixo.
+
+A saída digital desse processo é representada pela função:
+
+\[
+q:\mathbb{R}\to\{0,1\},
+\]
+
+definida como:
+
+\[
+q(t)=
+\begin{cases}
+1, & \text{se } g(t)>0,\\
+0, & \text{se } g(t)\leq0.
+\end{cases}
+\]
+
+Essa função representa matematicamente a transformação de um sinal analógico periódico em um sinal digital periódico. Como o comparador apenas altera os níveis de amplitude e mantém os instantes de transição determinados pelos cruzamentos da senoide com o eixo de tempo, a frequência do sinal permanece igual à frequência da rede elétrica.
+
+Consequentemente, \(q(t)\) possui também período
+
+\[
+T=\frac{1}{60},
+\]
+
+porém agora assumindo somente os valores discretos \(0\) e \(1\). Durante metade do período, correspondente ao semiciclo positivo da senoide, o sinal permanece em nível lógico alto; durante a outra metade, correspondente ao semiciclo negativo, permanece em nível lógico baixo.
+
+Portanto, a função \(q(t)\) representa uma onda quadrada ideal de \(60\)Hz, obtida a partir da senoide da rede elétrica através de um processo de redução de amplitude e comparação por zero. Esse sinal digital pode então ser utilizado como referência de clock para sincronizar os elementos sequenciais do circuito.
+
+
+\section{Divisão de frequência com o 4040}
+\section{}
+
+\end{document}
